@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kalnia+Glaze:wght@100..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+    <title>Tejas - Developer Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+    <span id="element"></span>
+    <header>
+        <nav class="navbar">
+            <div class="navv">
+                <h1>Tejas's Portfolio</h1>
+
+
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#" onclick="scrolltoAboutSection()">About</a></li>
+                    <li><a href="#" onclick="scrollToProjects()">Past Projects</a></li>
+                    <li><a href="#">Services</a></li>
+
+                </ul>
+            </div>
+        </nav>
+    </header>
+</body>
+
+</html>
+<main>
+    <div class="container">
+        <div class="text-column">
+            <h2 id="#element">Welcome to My Portfolio</h2>
+            <p>Hello! I'm Tejas, a passionate developer with a keen interest in creating innovative solutions. With
+                expertise in various programming languages and technologies, I strive to build efficient and
+                user-friendly applications.</p>
+            <p>Feel free to explore my past projects and services to get a better understanding of my skills and
+                experience.</p>
+        </div>
+        <div class="image-column">
+            <img src="Pfp.jpg" alt="Tejas - Developer" class="profile-image">
+        </div>
+    </div>
+</main>
+<section id="about" class="about-section">
+    <div class="container">
+        <h2 id="AboutSection">About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <div class="about-paragraphs">
+                    <p>I'm Tejas Gupta, a Computer Science major at Arizona State University with a minor in Business.
+                        I'm
+                        passionate about technology and innovation, and I love coding in Python, Java, and JavaScript.
+                        I've
+                        worked on various projects that involve algorithms, data structures, and software engineering.
+                    </p>
+
+                    <p>As a full stack developer, I've built responsive web apps using React and Angular, and designed
+                        robust APIs with Node.js. I'm experienced with databases like MySQL and MongoDB, and I enjoy
+                        creating seamless user experiences and efficient server-side logic.</p>
+
+                    <p>Outside of school and work, I'm a big fan of Anime and Manga, and I hit the gym regularly. I also
+                        love cars and enjoy attending car meets to check out the latest in automotive design and
+                        technology.</p>
+                </div>
+            </div>
+            <div class="about-images">
+                <div class="image-container">
+                    <img src="Porject.jpeg" alt="Coding" class="moving-image">
+                </div>
+                <div class="image-container">
+                    <img src="car.jpg" alt="Design" class="moving-image">
+                </div>
+                <div class="image-container">
+                    <img src="gym.JPG" alt="Teamwork" class="moving-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects" class="projects-section">
+    <div class="container">
+        <h2>Past Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Autonomous Delivery Drones</h3>
+                <p>Designed drones for medical deliveries using Arduino and 3D printing, collaborated with Arizona
+                    communities, pioneered scalable solutions.</p>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+            <div class="project-card">
+                <h3>Ag-tech Weather Monitoring System</h3>
+                <p>Measured farming parameters to enhance yields, utilized Arduino, managed finances, and designed CAD
+                    models.</p>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+            <div class="project-card">
+                <h3>Weather Forecast Website</h3>
+                <p>Developed responsive site with real-time data APIs, user-friendly interface, and scalable
+                    architecture.
+                <p>
+                    <a href="#" class="project-link">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .about-section {
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 60px 0;
+    }
+
+    .about-section h2 {
+        margin-bottom: 30px;
+    }
+
+    .about-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .about-text {
+        flex: 1;
+        padding-right: 40px;
+        color: white;
+    }
+
+    .about-paragraphs {
+        margin-top: 20px;
+    }
+
+    .about-images {
+        flex: 1;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .image-container {
+        width: 30%;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    .moving-image {
+        width: 100%;
+        height: auto;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .image-container:hover .moving-image {
+        transform: scale(1.1);
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    .image-container {
+        animation: float 4s ease-in-out infinite;
+    }
+
+    .image-container:nth-child(2) {
+        animation-delay: 1s;
+    }
+
+    .image-container:nth-child(3) {
+        animation-delay: 2s;
+    }
+
+    .projects-section {
+        background-color: rgba(255, 255, 255, 0.07);
+        padding: 60px 0;
+    }
+
+    .projects-section h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        color: white;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+
+    .project-card {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .project-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .project-card h3 {
+        color: white;
+        padding: 15px;
+        margin: 0;
+    }
+
+    .project-card p {
+        color: #ccc;
+        padding: 0 15px 15px;
+    }
+
+    .project-link {
+        display: inline-block;
+        margin: 15px;
+        padding: 8px 15px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .project-link:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<script>
+    function scrollToProjects() {
+        document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+    }
+    function scrolltoAboutSection(){
+        document.getElementById('AboutSection').scrollIntoView({ behavior:'smooth'});
+    }
+</script>
