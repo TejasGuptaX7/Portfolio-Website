@@ -63,15 +63,44 @@ export default function HomePage() {
     try {
       const res = await fetch("/api/comments", { cache: "no-store" });
       const json: ApiResponse<Comment[]> = await res.json();
-      if (json.ok && json.data) setComments(json.data);
+      if (json.ok && json.data) {
+        // Only update if comments actually changed to prevent flickering
+        setComments(prevComments => {
+          const newComments = json.data || [];
+          if (JSON.stringify(prevComments) !== JSON.stringify(newComments)) {
+            return newComments;
+          }
+          return prevComments;
+        });
+      }
     } catch {}
     finally { setLoadingComments(false); }
   };
 
   useEffect(() => {
     fetchComments();
-    pollRef.current = window.setInterval(fetchComments, 3000);
-    return () => { if (pollRef.current) clearInterval(pollRef.current); };
+    // Smart polling - only poll when page is visible and reduce frequency
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (pollRef.current) {
+          clearInterval(pollRef.current);
+          pollRef.current = null;
+        }
+      } else {
+        if (!pollRef.current) {
+          pollRef.current = window.setInterval(fetchComments, 15000);
+        }
+      }
+    };
+    
+    // Start with longer interval to prevent flickering
+    pollRef.current = window.setInterval(fetchComments, 15000);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => { 
+      if (pollRef.current) clearInterval(pollRef.current);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   const submitComment = async () => {
@@ -452,33 +481,29 @@ export default function HomePage() {
               <Input placeholder="Say something nice" value={commentMessage} onChange={(e) => setCommentMessage(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") submitComment(); }} />
               <Button onClick={submitComment} disabled={commentSubmitting || !commentName || !commentMessage}>{commentSubmitting ? "Sending" : "Post"}</Button>
             </div>
-            <div className="divide-y divide-border/60">
+            <div className="divide-y divide-border/60 min-h-[200px]">
               {loadingComments ? (
-                <div className="text-sm text-muted-foreground">Loading comments…</div>
+                <div className="text-sm text-muted-foreground py-4">Loading comments…</div>
               ) : comments.length === 0 ? (
-                <div className="text-sm text-muted-foreground">Be the first to drop a comment.</div>
+                <div className="text-sm text-muted-foreground py-4">Be the first to drop a comment.</div>
               ) : (
-                <AnimatePresence initial={false}>
+                <div className="space-y-0">
                   {comments.map((c) => (
-                    <motion.div
+                    <div
                       key={c.id}
-                      initial={{ y: 8, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="py-3 flex items-start gap-3"
+                      className="py-3 flex items-start gap-3 will-change-auto"
                     >
-                      <div className="size-8 rounded-full bg-secondary" />
-                      <div className="min-w-0">
+                      <div className="size-8 rounded-full bg-secondary flex-shrink-0" />
+                      <div className="min-w-0 flex-1">
                         <div className="text-sm font-medium">{c.name}</div>
                         <div className="inline-block max-w-full rounded-2xl px-3 py-2 bg-secondary/50 border border-border text-sm text-muted-foreground whitespace-pre-wrap break-words">
                           {c.message}
                         </div>
                         <div className="text-xs text-muted-foreground mt-1">{new Date(c.createdAt).toLocaleString()}</div>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
-                </AnimatePresence>
+                </div>
               )}
             </div>
           </div>
