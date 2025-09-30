@@ -23,11 +23,11 @@ export default function HomePage() {
   const [revealSite, setRevealSite] = useState(false);
   const [cinematic, setCinematic] = useState(false);
 
-  // Skills ticker
+  // Skills ticker - optimized to prevent flickering
   const skills = ["Python", "React", "AWS", "AI/ML", "Full-Stack Dev"];
   const [skillIdx, setSkillIdx] = useState(0);
   useEffect(() => {
-    const id = setInterval(() => setSkillIdx((i) => (i + 1) % skills.length), 1800);
+    const id = setInterval(() => setSkillIdx((i) => (i + 1) % skills.length), 2000);
     return () => clearInterval(id);
   }, []);
 
@@ -172,30 +172,30 @@ export default function HomePage() {
   const coffeePct = Math.round((coffee / total) * 100);
   const monsterPct = 100 - coffeePct;
 
-  // Scroll-based motion
+  // Scroll-based motion - optimized to prevent flickering
   const { scrollYProgress } = useScroll();
-  const bgX = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
-  const bgY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
+  const bgX = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-2%", "2%"]);
 
   // Helper UI
   function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
     return (
       <section id={id} className="max-w-3xl mx-auto px-5 sm:px-6">
         <motion.h2
-          className="text-xl font-medium text-muted-foreground mb-3 tracking-tight"
+          className="text-xl font-medium text-muted-foreground mb-3 tracking-tight will-change-transform"
           initial={{ y: 16, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, amount: 0.6 }}
-          transition={{ type: "spring", stiffness: 120, damping: 18 }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
         >
           {title}
         </motion.h2>
         <motion.div
-          className="rounded-xl bg-card border border-border"
+          className="rounded-xl bg-card border border-border will-change-transform"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.35 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
         >
           <div className="p-5 sm:p-6">{children}</div>
         </motion.div>
@@ -205,10 +205,10 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground flex flex-col">
-      {/* Subtle interactive background */}
+      {/* Subtle interactive background - optimized to prevent flickering */}
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed inset-0 -z-10"
+        className="pointer-events-none fixed inset-0 -z-10 will-change-transform"
         style={{
           background:
             "radial-gradient(60rem 60rem at 30% 20%, color-mix(in oklab, var(--primary) 20%, transparent), transparent), radial-gradient(40rem 40rem at 80% 60%, color-mix(in oklab, var(--muted-foreground) 18%, transparent), transparent)",
@@ -217,11 +217,12 @@ export default function HomePage() {
           filter: "blur(32px)",
           opacity: 0.6,
         }}
+        transition={{ type: "spring", stiffness: 100, damping: 30 }}
       />
 
-      {/* Intro iPhone-style messages */}
+      {/* Intro iPhone-style messages - optimized to prevent flickering */}
       {showIntro && (
-        <div className={`fixed inset-0 z-50 grid place-items-center bg-background transition-opacity duration-700 ${revealSite ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+        <div className={`fixed inset-0 z-50 grid place-items-center bg-background transition-opacity duration-500 ease-in-out will-change-auto ${revealSite ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
           <div className="w-[320px] bg-card border border-border rounded-[32px] p-4 shadow-sm">
             <div className="text-center text-sm text-muted-foreground mb-2">Messages</div>
             <div className="space-y-2">
@@ -259,8 +260,8 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Header / Intro */}
-      <header className={`relative z-10 transition-opacity duration-700 ${revealSite ? "opacity-100" : "opacity-0"}`}>
+      {/* Header / Intro - optimized to prevent flickering */}
+      <header className={`relative z-10 transition-opacity duration-500 ease-in-out will-change-auto ${revealSite ? "opacity-100" : "opacity-0"}`}>
         <div className="max-w-3xl mx-auto px-5 sm:px-6 pt-16 pb-10">
           <div className="flex items-center justify-between">
             <div>
@@ -287,21 +288,21 @@ export default function HomePage() {
         </div>
       </header>
 
-      <div className={`flex-1 space-y-10 sm:space-y-12 pb-24 transition-opacity duration-700 ${revealSite ? "opacity-100" : "opacity-0"}`}>
+      <div className={`flex-1 space-y-10 sm:space-y-12 pb-24 transition-opacity duration-500 ease-in-out will-change-auto ${revealSite ? "opacity-100" : "opacity-0"}`}>
         {/* Intro Section */}
         <Section id="intro" title="Intro">
           <div className="flex items-start gap-4">
             <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?q=80&w=256&auto=format&fit=crop" alt="avatar" className="size-14 rounded-full object-cover" />
             <div>
-              <motion.p initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.35 }} className="text-lg">Hey, I'm <span className="font-medium">Tejas</span>.</motion.p>
+              <motion.p initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.3, ease: "easeOut" }} className="text-lg will-change-transform">Hey, I'm <span className="font-medium">Tejas</span>.</motion.p>
               <p className="text-muted-foreground mt-1">I build reliable systems and thoughtful UIs with clean type, soft motion, and a focus on scale.</p>
               <div className="mt-3 text-sm text-muted-foreground">
                 <span className="opacity-80">Skills: </span>
-                <span className="inline-block align-middle transition-all duration-500 will-change-transform">{skills[skillIdx]}</span>
+                <span className="inline-block align-middle transition-all duration-300 ease-in-out will-change-transform">{skills[skillIdx]}</span>
                 <span className="mx-1">•</span>
-                <span className="inline-block align-middle transition-all duration-500 will-change-transform">{skills[(skillIdx+1)%skills.length]}</span>
+                <span className="inline-block align-middle transition-all duration-300 ease-in-out will-change-transform">{skills[(skillIdx+1)%skills.length]}</span>
                 <span className="mx-1">•</span>
-                <span className="inline-block align-middle transition-all duration-500 will-change-transform">{skills[(skillIdx+2)%skills.length]}</span>
+                <span className="inline-block align-middle transition-all duration-300 ease-in-out will-change-transform">{skills[(skillIdx+2)%skills.length]}</span>
               </div>
               <div className="mt-3 flex gap-2">
                 <a href="https://github.com/tejas" target="_blank" rel="noreferrer" aria-label="GitHub" className="size-9 grid place-items-center rounded-full border border-border hover:bg-secondary/60 transition-colors"><Github className="size-4" /></a>
@@ -378,21 +379,21 @@ export default function HomePage() {
         {/* Experience Section */}
         <Section id="experience" title="Experience">
           <div className="grid gap-4">
-            <div className="rounded-lg border border-border p-4 hover:border-foreground/30 transition-colors transform-gpu will-change-transform hover:rotate-[0.15deg] hover:-translate-y-0.5">
+            <div className="rounded-lg border border-border p-4 hover:border-foreground/30 transition-all duration-200 ease-out transform-gpu will-change-transform hover:rotate-[0.15deg] hover:-translate-y-0.5">
               <div className="flex items-center justify-between">
                 <h3 className="font-medium">GlobalLogic — Software Engineering Intern</h3>
                 <span className="text-xs text-muted-foreground">Summer 2025</span>
               </div>
               <p className="text-sm text-muted-foreground mt-1">Contributed to production features with TypeScript/React; emphasized performance and reliability.</p>
             </div>
-            <div className="rounded-lg border border-border p-4 hover:border-foreground/30 transition-colors transform-gpu will-change-transform hover:rotate-[0.15deg] hover:-translate-y-0.5">
+            <div className="rounded-lg border border-border p-4 hover:border-foreground/30 transition-all duration-200 ease-out transform-gpu will-change-transform hover:rotate-[0.15deg] hover:-translate-y-0.5">
               <div className="flex items-center justify-between">
                 <h3 className="font-medium">Headstarter AI — Software Engineering Fellow</h3>
                 <span className="text-xs text-muted-foreground">Summer 2024</span>
               </div>
               <p className="text-sm text-muted-foreground mt-1">Built AI-driven prototypes end-to-end; shipped features under tight timelines.</p>
             </div>
-            <div className="rounded-lg border border-border p-4 hover:border-foreground/30 transition-colors transform-gpu will-change-transform hover:rotate-[0.15deg] hover:-translate-y-0.5">
+            <div className="rounded-lg border border-border p-4 hover:border-foreground/30 transition-all duration-200 ease-out transform-gpu will-change-transform hover:rotate-[0.15deg] hover:-translate-y-0.5">
               <div className="flex items-center justify-between">
                 <h3 className="font-medium">EPICS Lab — Undergraduate Research Lead</h3>
                 <span className="text-xs text-muted-foreground">2024</span>

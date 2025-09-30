@@ -117,9 +117,33 @@
   * {
     @apply border-border outline-ring/50;
   }
-  html { scroll-behavior: smooth; }
+  html { 
+    scroll-behavior: smooth; 
+  }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Performance optimizations to prevent flickering */
+@layer utilities {
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-auto {
+    will-change: auto;
+  }
+  
+  .transform-gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  /* Smooth transitions for better performance */
+  .transition-smooth {
+    transition: all 0.2s ease-out;
   }
 }
 
